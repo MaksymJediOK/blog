@@ -20,6 +20,7 @@ class BlogPost extends Model
             'is_published',
             'published_at',
             'user_id',
+            'content_html',
         ];
 
     /**

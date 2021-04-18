@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Models\BlogPost;
 use App\Repositories\BlogPostRepository;
 use App\Repositories\BlogCategoryRepository;
 use App\Http\Requests\BlogPostUpdateRequest;
+use App\Http\Requests\BlogPostCreateRequest;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
@@ -46,7 +48,12 @@ class PostController extends BaseController
      */
     public function create()
     {
-        //
+        $item = new BlogPost();
+        $categoryList = //BlogCategory::all();
+            $this->blogCategoryRepository->getForComboBox();
+
+        return view('blog.admin.posts.edit', compact('item', 'categoryList'));
+        //dd(__METHOD__);
     }
 
     /**
@@ -57,7 +64,22 @@ class PostController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->input(); //отримаємо масив даних, які надійшли з форми
+        if (empty($data['slug'])) { //якщо псевдонім порожній
+            $data['slug'] = Str::slug($data['title']); //генеруємо псевдонім
+        }
+
+        $item = (new BlogPost())->create($data); //створюємо об'єкт і додаємо в БД
+
+        if ($item) {
+            return redirect()
+                ->route('blog.admin.posts.edit', [$item->id])
+                ->with(['success' => 'Вроді збережено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Помилка '])
+                ->withInput();
+        }
     }
 
     /**

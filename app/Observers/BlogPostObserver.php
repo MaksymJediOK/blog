@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\BlogPost;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BlogPostObserver
 {
@@ -19,7 +20,11 @@ class BlogPostObserver
 
         $this->setSlug($blogPost);
     }
-
+    public function creating(BlogPost $blogPost)
+    {
+        $blogPost->user_id= Auth::id();
+        $blogPost->content_html=$blogPost->content_raw;
+    }
     /**
      * якщо поле published_at порожнє і нам прийшло 1 в ключі is_published,
      * то генеруємо поточну дату
