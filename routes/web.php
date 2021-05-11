@@ -21,6 +21,11 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'digging_deeper'], function () {
+    Route::get('process-video', 'DiggingDeeperController@processVideo')
+        ->name('digging_deeper.processVideo');
+
+    Route::get('prepare-catalog', 'DiggingDeeperController@prepareCatalog')
+        ->name('digging_deeper.prepareCatalog');
 
     Route::get('collections', [DiggingDeeperController::class, 'collections'])
 
