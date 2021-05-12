@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\BlogPost;
-use Carbon\Carbon;
 use App\Jobs\ProcessVideoJob;
 use App\Jobs\GenerateCatalog\GenerateCatalogMainJob;
+use App\Models\BlogPost;
+use Carbon\Carbon;
+
 
 
 class DiggingDeeperController extends Controller
@@ -92,22 +92,20 @@ class DiggingDeeperController extends Controller
             return $newItem;
         });
 
-        dd ($collection);
-
-        $newItem = new \stdClass;
-        $newItem->id = 9999;
-
-        $newItem2 = new \stdClass;
-        $newItem2->id = 8888;
-
-        dd ($newItem, $newItem2);
-
-        //Додаємо елекмент в початок/кінець колекції
-        $newItemFirst = $collection->prepend($newItem)->first(); //додали в початок
-        $newItemLast = $collection->push($newItem2)->last(); //додали в кінець
-        $pulledItem = $collection->pull(1); //забрали з першим ключем
-
-        dd(compact('collection', 'newItemFirst' , 'newItemLast', 'pulledItem'));
+//      dd ($collection);
+//
+//      $newItem = new \stdClass;
+//     $newItem->id = 9999;
+//
+//        $newItem2 = new \stdClass;//       $newItem2->id = 8888;
+//
+//        dd ($newItem, $newItem2);
+//
+//        //Додаємо елекмент в початок/кінець колекції
+//        $newItemFirst = $collection->prepend($newItem)->first(); //додали в початок
+//        $newItemLast = $collection->push($newItem2)->last(); //додали в кінець
+//        $pulledItem = $collection->pull(1); //забрали з першим ключем
+//      dd(compact('collection', 'newItemFirst' , 'newItemLast', 'pulledItem'));
 
         //Фільтрація
         $filtered = $collection->filter(function ($item) {
